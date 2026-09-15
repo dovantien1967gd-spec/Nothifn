@@ -89,8 +89,8 @@ TargetHighlightObj.OutlineColor = Color3.fromRGB(255, 255, 255)
 
 -- Rayfield Window
 local Window = Rayfield:CreateWindow({
-    Name = "the's hub | Ultimate HvH Edition",
-    LoadingTitle = "Loading Systems...",
+    Name = "the's hub | Ultimate HvH Edition (Auto-Switch + Auto-Reengage)",
+    LoadingTitle = "Loading Skibidi Systems...",
     LoadingSubtitle = "by Yueshi mogger 9999 aura 🔥",
     ConfigurationSaving = { Enabled = false },
     Discord = { Enabled = false },
@@ -266,7 +266,14 @@ MiscTab:CreateButton({ Name = "9. Destroy GUI Engine", Callback = function() Ray
 MiscTab:CreateButton({ Name = "10. Copy Server Job ID", Callback = function() setclipboard(tostring(game.JobId)) end })
 MiscTab:CreateButton({ Name = "11. Copy Player Place ID", Callback = function() setclipboard(tostring(game.PlaceId)) end })
 
--- ==================== [CORE ENGINE LOOPS] ====================
+-- ==================== [CORE ENGINE LOOPS (MỚI: AUTO-SWITCH + AUTO-REENGAGE)] =---
+
+-- Auto-Reengage khi nhân vật hồi sinh (Respawn)
+LocalPlayer.CharacterAdded:Connect(function(newChar)
+    repeat task.wait(0.1) until newChar and newChar:FindFirstChild("HumanoidRootPart") and newChar:FindFirstChildOfClass("Humanoid")
+    -- Reset lại trạng thái bay nếu cần để tránh kẹt
+    TravelState = "NONE"
+end)
 
 RunService.Stepped:Connect(function()
     if Noclip_Enabled and LocalPlayer.Character then
@@ -282,6 +289,28 @@ RunService.RenderStepped:Connect(function()
     if ClosestPlayer_Enabled then
         local target = GetClosestPlayer()
         if target then SelectedPlayer = target end
+    end
+
+    -- [LOGIC MỚI]: Check xem Target hiện tại có bị ngỏm (Health = 0) hoặc cút khỏi game ko, nếu có thì tự động quét sang mục tiêu mới liền!
+    if SelectedPlayer then
+        local isDead = false
+        if not SelectedPlayer.Character or not SelectedPlayer.Character:FindFirstChildOfClass("Humanoid") then
+            isDead = true
+        else
+            local hum = SelectedPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if hum.Health <= 0 then
+                isDead = true
+            end
+        end
+
+        if isDead then
+            local newTarget = GetClosestPlayer()
+            if newTarget then
+                SelectedPlayer = newTarget
+            else
+                SelectedPlayer = nil
+            end
+        end
     end
 
     -- Target Highlight
