@@ -89,7 +89,7 @@ TargetHighlightObj.OutlineColor = Color3.fromRGB(255, 255, 255)
 
 -- Rayfield Window
 local Window = Rayfield:CreateWindow({
-    Name = "the's hub | Ultimate HvH Edition (Auto-Switch + Auto-Reengage)",
+    Name = "the's hub | Ultimate HvH Edition (9 Tabs Full 🔥)",
     LoadingTitle = "Loading Skibidi Systems...",
     LoadingSubtitle = "by Yueshi mogger 9999 aura 🔥",
     ConfigurationSaving = { Enabled = false },
@@ -97,13 +97,16 @@ local Window = Rayfield:CreateWindow({
     KeySystem = false
 })
 
--- TẠO 6 TAB
+-- TẠO 9 TAB
 local TargetTab = Window:CreateTab("Targeting", 4483362458)
 local HvHTab = Window:CreateTab("HvH & Flight", 4483362458)
 local DefenseTab = Window:CreateTab("Defense", 4483362458)
 local PvPTab = Window:CreateTab("PvP & Combat", 4483362458)
 local ESPTab = Window:CreateTab("Visual & ESP", 4483362458)
 local MiscTab = Window:CreateTab("Misc & Server", 4483362458)
+local GuideTab = Window:CreateTab("Guide & Tips", 4483362458)
+local FunFactTab = Window:CreateTab("JJS Fun Facts", 4483362458)
+local AITab = Window:CreateTab("AI Assistant", 4483362458)
 
 local function GetPlayerNames()
     local names = {}
@@ -141,7 +144,7 @@ local function ClearESP(plr)
     end
 end
 
--- ==================== [TAB 1: TARGETING (10 CHỨC NĂNG)] ====================
+-- ==================== [TAB 1: TARGETING] ====================
 local TargetDropdown = TargetTab:CreateDropdown({
     Name = "1. Select Target Player",
     Options = GetPlayerNames(),
@@ -162,7 +165,7 @@ TargetTab:CreateColorPicker({ Name = "8. Target Circle Color", Color = Color3.fr
 TargetTab:CreateSlider({ Name = "9. Target Circle Radius", Range = {1, 10}, Increment = 0.5, CurrentValue = 3, Callback = function(V) TargetCircle_Radius = V CirclePart.Size = Vector3.new(0.2, V*2, V*2) end })
 TargetTab:CreateButton({ Name = "10. Clear Current Target", Callback = function() SelectedPlayer = nil TargetHighlightObj.Parent = nil end })
 
--- ==================== [TAB 2: HVH & FLIGHT (12 CHỨC NĂNG)] ====================
+-- ==================== [TAB 2: HVH & FLIGHT] ====================
 HvHTab:CreateToggle({ Name = "1. Enable Orbit System", CurrentValue = false, Callback = function(V) Orbit_Enabled = V end })
 HvHTab:CreateSlider({ Name = "2. Orbit Speed", Range = {1, 100}, Increment = 1, CurrentValue = 37, Callback = function(V) OrbitSpeed = V end })
 HvHTab:CreateSlider({ Name = "3. Orbit Radius", Range = {1, 30}, Increment = 1, CurrentValue = 2, Callback = function(V) OrbitRadius = V end })
@@ -176,7 +179,7 @@ HvHTab:CreateSlider({ Name = "10. Smart Travel Trigger Distance", Range = {20, 3
 HvHTab:CreateToggle({ Name = "11. Underground Desync Mode", CurrentValue = false, Callback = function(V) Underground_Enabled = V end })
 HvHTab:CreateSlider({ Name = "12. Underground Depth", Range = {5, 50}, Increment = 1, CurrentValue = 15, Callback = function(V) Underground_Depth = V end })
 
--- ==================== [TAB 3: DEFENSE & PROTECTION (10 CHỨC NĂNG)] ====================
+-- ==================== [TAB 3: DEFENSE & PROTECTION] ====================
 DefenseTab:CreateToggle({ Name = "1. Anti-Void Fall Protection", CurrentValue = true, Callback = function(V) AntiVoid_Enabled = V end })
 DefenseTab:CreateToggle({ Name = "2. Anti-Fling Physics Shield", CurrentValue = true, Callback = function(V) AntiFling_Enabled = V end })
 DefenseTab:CreateToggle({ Name = "3. Anti-Grab / Carry Evade", CurrentValue = true, Callback = function(V) AntiGrab_Enabled = V end })
@@ -194,7 +197,7 @@ DefenseTab:CreateButton({ Name = "10. Reset Velocity Immediately", Callback = fu
     if myHRP then myHRP.AssemblyLinearVelocity = Vector3.zero myHRP.AssemblyAngularVelocity = Vector3.zero end
 end })
 
--- ==================== [TAB 4: PVP & COMBAT (10 CHỨC NĂNG)] ====================
+-- ==================== [TAB 4: PVP & COMBAT] ====================
 PvPTab:CreateToggle({ Name = "1. Camera Lock Aimbot", CurrentValue = false, Callback = function(V) AimbotCam_Enabled = V end })
 PvPTab:CreateToggle({ Name = "2. Anti-Stun Humanoid State", CurrentValue = false, Callback = function(V) AntiStun = V end })
 PvPTab:CreateButton({ Name = "3. Instant Teleport Behind Target", Callback = function() 
@@ -230,7 +233,7 @@ PvPTab:CreateButton({ Name = "10. Clear Character Velocity", Callback = function
     if myHRP then myHRP.AssemblyLinearVelocity = Vector3.zero end
 end })
 
--- ==================== [TAB 5: VISUAL & ESP (11 CHỨC NĂNG)] ====================
+-- ==================== [TAB 5: VISUAL & ESP] ====================
 ESPTab:CreateToggle({ Name = "1. Master ESP Toggle", CurrentValue = false, Callback = function(V) 
     ESP_Enabled = V 
     if not V then for plr, _ in pairs(ESP_Objects) do ClearESP(plr) end end 
@@ -246,7 +249,7 @@ ESPTab:CreateSlider({ Name = "9. FOV Value", Range = {60, 120}, Increment = 1, C
 ESPTab:CreateToggle({ Name = "10. Fullbright (Map Ambient)", CurrentValue = false, Callback = function(V) Fullbright_Enabled = V end })
 ESPTab:CreateToggle({ Name = "11. Remove Atmosphere Fog", CurrentValue = false, Callback = function(V) NoFog_Enabled = V end })
 
--- ==================== [TAB 6: MISC & SERVER (11 CHỨC NĂNG)] ====================
+-- ==================== [TAB 6: MISC & SERVER] ====================
 MiscTab:CreateSlider({ Name = "1. WalkSpeed Adjustment", Range = {16, 200}, Increment = 1, CurrentValue = 16, Callback = function(V) WalkSpeed_Value = V end })
 MiscTab:CreateSlider({ Name = "2. JumpPower Adjustment", Range = {50, 300}, Increment = 5, CurrentValue = 50, Callback = function(V) JumpPower_Value = V end })
 MiscTab:CreateToggle({ Name = "3. Noclip Walls Mode", CurrentValue = false, Callback = function(V) Noclip_Enabled = V end })
@@ -266,12 +269,50 @@ MiscTab:CreateButton({ Name = "9. Destroy GUI Engine", Callback = function() Ray
 MiscTab:CreateButton({ Name = "10. Copy Server Job ID", Callback = function() setclipboard(tostring(game.JobId)) end })
 MiscTab:CreateButton({ Name = "11. Copy Player Place ID", Callback = function() setclipboard(tostring(game.PlaceId)) end })
 
--- ==================== [CORE ENGINE LOOPS (MỚI: AUTO-SWITCH + AUTO-REENGAGE)] =---
+-- ==================== [TAB 7: GUIDE & TIPS] ====================
+GuideTab:CreateParagraph({
+    Title = "📖 Hướng Dẫn Sử Dụng the's hub",
+    Content = "1. Tab Targeting: Chọn mục tiêu hoặc bật Auto Closest Player để script tự bắt kẻ địch gần nhất.\n2. Tab HvH & Flight: Bật Orbit + Smart Sky Travel để bay vòng quanh và truy đuổi mục tiêu tự động.\n3. Tab Defense: Bật Anti-Void và Anti-Fling để không bị bay màu hoặc văng map.\n4. Tab ESP: Bật Master ESP để nhìn xuyên tường, thấy máu và tên đối thủ."
+})
+GuideTab:CreateButton({ Name = "📌 Copy Discord Group Link", Callback = function()
+    setclipboard("https://discord.gg/theshub-skibidi")
+end })
 
--- Auto-Reengage khi nhân vật hồi sinh (Respawn)
+-- ==================== [TAB 8: JJS FUN FACTS] ====================
+FunFactTab:CreateParagraph({
+    Title = "🔥 Jujutsu Shenanigans Lore & Facts",
+    Content = "- Gojo (The Strongest) có chiêu cuối vô lượng không gian khiến đối thủ đơ hình toàn tập.\n- Megumi (Ten Shadows) cực mạnh với khả năng thả cóc và lướt bóng né đòn cực ảo.\n- Yuji Itadori nổi tiếng với những cú đấm Black Flash chí mạng gây sát thương cực khủng.\n- Mẹo né Ultimate: Dùng tính năng Smart Sky Travel trong hub này bay thẳng lên trời cao 300 mét là né sạch!"
+})
+FunFactTab:CreateButton({ Name = "💬 Random Chat Flex: 'Stand proud, you are strong.'", Callback = function()
+    pcall(function()
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Stand proud, you are strong. 🔥", "All")
+    end)
+end })
+
+-- ==================== [TAB 9: AI ASSISTANT CHAT] ====================
+AITab:CreateParagraph({
+    Title = "🤖 Trợ Lý Ảo Yueshi AI",
+    Content = "Chỗ này để flex trí tuệ nhân tạo brainrot core 9999 aura của Yueshi mogger! Bạn có thể hỏi bất cứ điều gì khi đang chiến game."
+})
+AITab:CreateButton({ Name = "💬 Hỏi AI: 'Làm sao để combo Gojo mạnh nhất?'", Callback = function()
+    Rayfield:Notify({
+        Title = "Yueshi AI Trả Lời 🧠",
+        Content = "Bấm 1 -> Dash -> Đấm thường 3 phát -> Ném đá -> Ultimate vô hạn thành trì! Quá dễ bro ơi 🔥",
+        Duration = 6.5
+    })
+end })
+AITab:CreateButton({ Name = "💬 Hỏi AI: 'Tại sao tôi lại quá đẹp trai?'", Callback = function()
+    Rayfield:Notify({
+        Title = "Yueshi AI Trả Lời 😎",
+        Content = "Vì chỉ số aura của bạn đã vượt quá giới hạn vũ trụ Roblox rồi, không thể giải thích bằng khoa học! 🗿",
+        Duration = 6.5
+    })
+end })
+
+-- ==================== [CORE ENGINE LOOPS (AUTO-SWITCH + AUTO-REENGAGE)] ====================
+
 LocalPlayer.CharacterAdded:Connect(function(newChar)
     repeat task.wait(0.1) until newChar and newChar:FindFirstChild("HumanoidRootPart") and newChar:FindFirstChildOfClass("Humanoid")
-    -- Reset lại trạng thái bay nếu cần để tránh kẹt
     TravelState = "NONE"
 end)
 
@@ -291,36 +332,27 @@ RunService.RenderStepped:Connect(function()
         if target then SelectedPlayer = target end
     end
 
-    -- [LOGIC MỚI]: Check xem Target hiện tại có bị ngỏm (Health = 0) hoặc cút khỏi game ko, nếu có thì tự động quét sang mục tiêu mới liền!
     if SelectedPlayer then
         local isDead = false
         if not SelectedPlayer.Character or not SelectedPlayer.Character:FindFirstChildOfClass("Humanoid") then
             isDead = true
         else
             local hum = SelectedPlayer.Character:FindFirstChildOfClass("Humanoid")
-            if hum.Health <= 0 then
-                isDead = true
-            end
+            if hum.Health <= 0 then isDead = true end
         end
 
         if isDead then
             local newTarget = GetClosestPlayer()
-            if newTarget then
-                SelectedPlayer = newTarget
-            else
-                SelectedPlayer = nil
-            end
+            if newTarget then SelectedPlayer = newTarget else SelectedPlayer = nil end
         end
     end
 
-    -- Target Highlight
     if TargetHighlight_Enabled and SelectedPlayer and SelectedPlayer.Character then
         TargetHighlightObj.Parent = SelectedPlayer.Character
     else
         TargetHighlightObj.Parent = nil
     end
 
-    -- Target Circle
     if TargetCircle_Enabled and SelectedPlayer and SelectedPlayer.Character and SelectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
         local targetHRP = SelectedPlayer.Character.HumanoidRootPart
         CirclePart.Parent = workspace
@@ -338,7 +370,6 @@ RunService.RenderStepped:Connect(function()
         Camera.CFrame = CFrame.new(Camera.CFrame.Position, SelectedPlayer.Character.HumanoidRootPart.Position)
     end
 
-    -- Anti-Grab
     if AntiGrab_Enabled and LocalPlayer.Character then
         local hum = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
         if hum and (hum:GetState() == Enum.HumanoidStateType.PlatformStanding or hum:GetState() == Enum.HumanoidStateType.Seated) then
@@ -346,7 +377,6 @@ RunService.RenderStepped:Connect(function()
         end
     end
 
-    -- ESP Rendering
     for _, plr in pairs(Players:GetPlayers()) do
         if plr ~= LocalPlayer then
             if ESP_Enabled and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") and plr.Character:FindFirstChildOfClass("Humanoid") and plr.Character.Humanoid.Health > 0 then
@@ -408,7 +438,6 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
--- Physics Loop
 local orbitAngle = 0
 local targetPeakHeight = 0
 
@@ -423,7 +452,6 @@ RunService.Heartbeat:Connect(function(dt)
         end
         hum.JumpPower = JumpPower_Value
 
-        -- Low HP Emergency Escape
         if EmergencySky_Enabled and hum.Health > 0 and (hum.Health / hum.MaxHealth * 100) <= EmergencyHP_Threshold then
             myHRP.AssemblyLinearVelocity = Vector3.zero
             myHRP.AssemblyAngularVelocity = Vector3.zero
@@ -431,13 +459,11 @@ RunService.Heartbeat:Connect(function(dt)
             return
         end
 
-        -- Anti-Void
         if AntiVoid_Enabled and myHRP.Position.Y < -80 then
             myHRP.AssemblyLinearVelocity = Vector3.zero
             myHRP.CFrame = CFrame.new(myHRP.Position.X, 10, myHRP.Position.Z)
         end
 
-        -- Anti-Fling
         if AntiFling_Enabled then
             if myHRP.AssemblyAngularVelocity.Magnitude > 50 or myHRP.AssemblyLinearVelocity.Magnitude > 200 then
                 myHRP.AssemblyAngularVelocity = Vector3.zero
@@ -445,7 +471,6 @@ RunService.Heartbeat:Connect(function(dt)
             end
         end
 
-        -- Anti-Knockback
         if AntiKnockback_Enabled then
             myHRP.AssemblyLinearVelocity = Vector3.new(0, myHRP.AssemblyLinearVelocity.Y, 0)
         end
@@ -453,7 +478,6 @@ RunService.Heartbeat:Connect(function(dt)
 
     if AntiStun and hum then hum.PlatformStand = false end
 
-    -- Orbit Engine
     if Orbit_Enabled and SelectedPlayer and SelectedPlayer.Character and SelectedPlayer.Character:FindFirstChild("HumanoidRootPart") and myHRP then
         local targetHRP = SelectedPlayer.Character.HumanoidRootPart
         local predictedTargetPos = targetHRP.Position
@@ -513,14 +537,12 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
--- Infinite Jump Request
 UserInputService.JumpRequest:Connect(function()
     if InfJump_Enabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
         LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
     end
 end)
 
--- Player Events
 Players.PlayerAdded:Connect(function() TargetDropdown:Refresh(GetPlayerNames()) end)
 Players.PlayerRemoving:Connect(function(plr)
     ClearESP(plr)
