@@ -22,11 +22,6 @@ local Underground_Enabled = false
 local Underground_Depth = 15
 local PredictMovement_Enabled = true
 local PredictionFactor = 0.165
-local SmartTravel_Enabled = true
-local SmartTravel_Dist = 100
-local SmartTravel_FlySpeed = 120
-local SkyHeight = 150
-local TravelState = "NONE"
 local EmergencySky_Enabled = false
 local EmergencyHP_Threshold = 25
 local EmergencySky_Height = 300
@@ -35,8 +30,6 @@ local EmergencySky_Height = 300
 local AntiVoid_Enabled = true
 local AntiFling_Enabled = true
 local AntiGrab_Enabled = true
-local AntiKnockback_Enabled = false
-local AntiSlow_Enabled = false
 
 -- PvP & Cook Variables
 local AimbotCam_Enabled = false
@@ -51,7 +44,6 @@ local InfJump_Enabled = false
 local CustomFOV_Enabled = false
 local FOV_Value = 70
 local Fullbright_Enabled = false
-local NoFog_Enabled = false
 
 -- Target Highlight Instance
 local TargetHighlightObj = Instance.new("Highlight")
@@ -62,15 +54,15 @@ TargetHighlightObj.OutlineColor = Color3.fromRGB(255, 255, 255)
 
 -- Rayfield Window
 local Window = Rayfield:CreateWindow({
-    Name = "the's hub | Fixed Ultimate Edition 💀🔥",
-    LoadingTitle = "Loading Fixed Master Engine...",
+    Name = "the's hub | 10-Tab Absolute Master Edition 💀🔥",
+    LoadingTitle = "Loading Ultimate Master Engine...",
     LoadingSubtitle = "by Yueshi mogger 9999 aura 🔥",
     ConfigurationSaving = { Enabled = false },
     Discord = { Enabled = false },
     KeySystem = false
 })
 
--- TẠO 10 TAB CHUẨN KHÔNG CẦN CHỈNH
+-- TẠO ĐÚNG 10 TAB TRÒN TRỊNH
 local TargetTab = Window:CreateTab("Targeting", 4483362458)
 local HvHTab = Window:CreateTab("HvH & Flight", 4483362458)
 local DefenseTab = Window:CreateTab("Defense", 4483362458)
@@ -138,10 +130,7 @@ HvHTab:CreateSlider({ Name = "3. Orbit Radius", Range = {1, 30}, Increment = 1, 
 HvHTab:CreateSlider({ Name = "4. Orbit Height Offset", Range = {-10, 50}, Increment = 1, CurrentValue = 7, Callback = function(V) OrbitHeight = V end })
 HvHTab:CreateToggle({ Name = "5. Target Movement Prediction", CurrentValue = true, Callback = function(V) PredictMovement_Enabled = V end })
 HvHTab:CreateSlider({ Name = "6. Prediction Intensity", Range = {0.01, 0.5}, Increment = 0.005, CurrentValue = 0.165, Callback = function(V) PredictionFactor = V end })
-HvHTab:CreateToggle({ Name = "7. Smart Sky Travel (3-Step)", CurrentValue = true, Callback = function(V) SmartTravel_Enabled = V end })
-HvHTab:CreateSlider({ Name = "8. Travel Peak Height", Range = {50, 500}, Increment = 10, CurrentValue = 150, Callback = function(V) SkyHeight = V end })
-HvHTab:CreateSlider({ Name = "9. Travel Speed", Range = {20, 500}, Increment = 10, CurrentValue = 120, Callback = function(V) SmartTravel_FlySpeed = V end })
-HvHTab:CreateToggle({ Name = "10. Underground Desync Mode", CurrentValue = false, Callback = function(V) Underground_Enabled = V end })
+HvHTab:CreateToggle({ Name = "7. Underground Desync Mode", CurrentValue = false, Callback = function(V) Underground_Enabled = V end })
 
 -- ==================== [TAB 3: DEFENSE] ====================
 DefenseTab:CreateToggle({ Name = "1. Anti-Void Fall Protection", CurrentValue = true, Callback = function(V) AntiVoid_Enabled = V end })
@@ -209,13 +198,13 @@ ESPTab:CreateToggle({ Name = "3. Custom Camera FOV", CurrentValue = false, Callb
 ESPTab:CreateSlider({ Name = "4. FOV Value", Range = {60, 120}, Increment = 1, CurrentValue = 70, Callback = function(V) FOV_Value = V end })
 ESPTab:CreateToggle({ Name = "5. Fullbright Map", CurrentValue = false, Callback = function(V) Fullbright_Enabled = V end })
 
--- ==================== [TAB 8: 📖 HƯỚNG DẪN SỬ DỤNG SCRIPT] ====================
-GuideTab:CreateButton({ Name = "📌 BƯỚC 1: Dùng Executor mượt mà (Delta/Fluxus/Solara)", Callback = function() print("Chuẩn bị executor chuẩn.") end })
+-- ==================== [TAB 7: 📖 HƯỚNG DẪN DÙNG SCRIPT] ====================
+GuideTab:CreateButton({ Name = "📌 BƯỚC 1: Dùng Executor uy tín (Delta/Fluxus/Solara)", Callback = function() print("Chuẩn bị executor chuẩn.") end })
 GuideTab:CreateButton({ Name = "📌 BƯỚC 2: Vào Map Jujutsu Shenanigans", Callback = function() print("Vào game thành công.") end })
 GuideTab:CreateButton({ Name = "📌 BƯỚC 3: Dán Code và Execute", Callback = function() print("Chạy script thành công.") end })
 GuideTab:CreateButton({ Name = "📌 BƯỚC 4: Chọn mục tiêu ở Tab 1", Callback = function() print("Tab 1 ready.") end })
 
--- ==================== [TAB 9: ⚡ PERFORMANCE BOOSTER] ====================
+-- ==================== [TAB 8: ⚡ PERFORMANCE BOOSTER] ====================
 PerfTab:CreateButton({ Name = "1. Potato Mode (Low Graphics)", Callback = function()
     settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
     Lighting.GlobalShadows = false
@@ -224,13 +213,13 @@ PerfTab:CreateButton({ Name = "2. Unlock Framerate (Max FPS)", Callback = functi
     pcall(function() setfpscap(999) end)
 end })
 
--- ==================== [TAB 10: 💀 ULTIMATE PANIC] ====================
+-- ==================== [TAB 9: 💀 ULTIMATE PANIC] ====================
 PanicTab:CreateButton({ Name = "1. INSTANT PANIC: Hide GUI & Stop All", Callback = function()
     Rayfield:Destroy()
     Orbit_Enabled = false
 end })
 
--- ==================== [TAB 11: MISC & SERVER] ====================
+-- ==================== [TAB 10: MISC & SERVER] ====================
 MiscTab:CreateSlider({ Name = "1. WalkSpeed Adjustment", Range = {16, 200}, Increment = 1, CurrentValue = 16, Callback = function(V) WalkSpeed_Value = V end })
 MiscTab:CreateSlider({ Name = "2. JumpPower Adjustment", Range = {50, 300}, Increment = 5, CurrentValue = 50, Callback = function(V) JumpPower_Value = V end })
 MiscTab:CreateToggle({ Name = "3. Noclip Walls Mode", CurrentValue = false, Callback = function(V) Noclip_Enabled = V end })
