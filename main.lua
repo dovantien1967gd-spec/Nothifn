@@ -97,7 +97,7 @@ local Window = Rayfield:CreateWindow({
     KeySystem = false
 })
 
--- TẠO 9 TAB
+-- TẠO 9 TAB CHUẨN CHỈNH
 local TargetTab = Window:CreateTab("Targeting", 4483362458)
 local HvHTab = Window:CreateTab("HvH & Flight", 4483362458)
 local DefenseTab = Window:CreateTab("Defense", 4483362458)
@@ -289,27 +289,63 @@ FunFactTab:CreateButton({ Name = "💬 Random Chat Flex: 'Stand proud, you are s
     end)
 end })
 
--- ==================== [TAB 9: AI ASSISTANT CHAT] ====================
+-- ==================== [TAB 9: AI ASSISTANT CONSOLE (CHAT THẬT)] ====================
 AITab:CreateParagraph({
-    Title = "🤖 Trợ Lý Ảo Yueshi AI",
-    Content = "Chỗ này để flex trí tuệ nhân tạo brainrot core 9999 aura của Yueshi mogger! Bạn có thể hỏi bất cứ điều gì khi đang chiến game."
+    Title = "🤖 Trợ Lý Ảo Yueshi AI - Live Console",
+    Content = "Gõ câu hỏi của bạn vào ô bên dưới và bấm nút Gửi để trò chuyện trực tiếp với Yueshi AI (9999 aura) nhé bro! 🔥"
 })
-AITab:CreateButton({ Name = "💬 Hỏi AI: 'Làm sao để combo Gojo mạnh nhất?'", Callback = function()
-    Rayfield:Notify({
-        Title = "Yueshi AI Trả Lời 🧠",
-        Content = "Bấm 1 -> Dash -> Đấm thường 3 phát -> Ném đá -> Ultimate vô hạn thành trì! Quá dễ bro ơi 🔥",
-        Duration = 6.5
+
+local CurrentChatLog = "Yueshi AI: Chào đại vương! Tui đã sẵn sàng nghe lệnh, muốn hỏi gì cứ phang. 🗿"
+
+local ChatDisplay = AITab:CreateParagraph({
+    Title = "💬 Lịch Sử Trò Chuyện",
+    Content = CurrentChatLog
+})
+
+local UserQueryText = ""
+
+AITab:CreateInput({
+    Name = "⌨️ Nhập câu hỏi cho AI...",
+    PlaceholderText = "Ví dụ: Làm sao để né chiêu Gojo?",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Text)
+        UserQueryText = Text
+    end,
+})
+
+AITab:CreateButton({ Name = "🚀 Gửi Tin Nhắn", Callback = function()
+    if UserQueryText == "" then return end
+    
+    local question = UserQueryText
+    local answer = ""
+    local qLower = string.lower(question)
+    
+    if string.find(qLower, "gojo") then
+        answer = "Gặp Gojo thì cứ bật Smart Sky Travel bay thẳng lên trời 300m né Vô Lượng Không Gian liền bro ơi! 🚀"
+    elseif string.find(qLower, "combo") then
+        answer = "Combo cực chất: Dash -> Đấm 3 phát -> Phá trụ năng lượng -> Ultimate lật kèo! 🔥"
+    elseif string.find(qLower, "aura") then
+        answer = "Aura của bro hiện đang đạt mức 999999, đứng im kẻ địch cũng tự quỳ gối nhé! 🗿"
+    elseif string.find(qLower, "lag") then
+        answer = "Lag quá thì test ngay tính năng Black World hoặc Server Hop trong tab Misc nha!"
+    else
+        answer = "Câu hỏi đỉnh quá, hệ thống skibidi đang bận búp bê aura cho bro rồi! Hỏi câu khác đi kkk 💀"
+    end
+    
+    CurrentChatLog = "👤 Bạn: " .. question .. "\n\n🤖 Yueshi AI: " .. answer .. "\n\n-----------------------------------\n" .. CurrentChatLog
+    ChatDisplay:Set({
+        Title = "💬 Lịch Sử Trò Chuyện",
+        Content = CurrentChatLog
     })
-end })
-AITab:CreateButton({ Name = "💬 Hỏi AI: 'Tại sao tôi lại quá đẹp trai?'", Callback = function()
+    
     Rayfield:Notify({
-        Title = "Yueshi AI Trả Lời 😎",
-        Content = "Vì chỉ số aura của bạn đã vượt quá giới hạn vũ trụ Roblox rồi, không thể giải thích bằng khoa học! 🗿",
-        Duration = 6.5
+        Title = "Yueshi AI Đã Phản Hồi 🧠",
+        Content = "Đã check xong câu hỏi của đại vương!",
+        Duration = 3
     })
 end })
 
--- ==================== [CORE ENGINE LOOPS (AUTO-SWITCH + AUTO-REENGAGE)] ====================
+-- ==================== [CORE ENGINE LOOPS] ====================
 
 LocalPlayer.CharacterAdded:Connect(function(newChar)
     repeat task.wait(0.1) until newChar and newChar:FindFirstChild("HumanoidRootPart") and newChar:FindFirstChildOfClass("Humanoid")
